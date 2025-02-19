@@ -14,6 +14,8 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import { Drawer } from "@/components/ui/drawer";
 import { Dialog } from "@/components/ui/dialog";
 import applySortingAndFilteringToDecks from "@/utils/decksSorterFilter";
+import useCreateDeck from "@/hooks/Decks/useCreateDeck";
+import generateRandomColor from "@/utils/generateRandomColor";
 
 const UserDecksPage: React.FC = () => {
   const { user } = useContext(UserContext);
@@ -30,6 +32,8 @@ const UserDecksPage: React.FC = () => {
     sortByDate: "latest",
     searchByName: "",
   });
+
+  const { createDeck, loading: createDeckLoading } = useCreateDeck();
 
   useEffect(() => {
     if (userDecks)
@@ -62,6 +66,22 @@ const UserDecksPage: React.FC = () => {
     }));
   };
 
+  const handleCreateDeck = async (deckName: string) => {
+    const selectedColor = generateRandomColor();
+
+    const result = await createDeck({
+      id: "",
+      deck_name: deckName.trim(),
+      user_id: user.id!,
+      color: selectedColor,
+      card_count: 0,
+    });
+
+    if (result.error) {
+      throw new Error(result.error);
+    }
+  };
+
   return (
     <>
       <Toaster />
@@ -82,9 +102,10 @@ const UserDecksPage: React.FC = () => {
           onOpenChange={setIsAddDeckDialogOpen}
         >
           <AddDeckDialog
-            userId={user.id!}
             onClose={() => setIsAddDeckDialogOpen(false)}
             onSuccess={handleFormSuccess}
+            createDeck={handleCreateDeck}
+            loading={createDeckLoading}
           />
         </Dialog>
 

@@ -1,8 +1,6 @@
 import { useState, useEffect } from "react";
 import { PiTrash, PiPlusCircle } from "react-icons/pi";
 import { Spinner } from "react-activity";
-import useCreateDeck from "../../hooks/Decks/useCreateDeck";
-import toast from "react-hot-toast";
 import {
   DialogContent,
   DialogDescription,
@@ -12,20 +10,24 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import toast from "react-hot-toast";
 
-import generateRandomColor from "@/utils/generateRandomColor";
-
-interface AddDeckDialogProps {
-  userId: string;
+export interface AddDeckDialogProps {
   onClose: () => void;
   onSuccess: () => void;
+  createDeck: (deckName: string) => Promise<void>;
+  loading: boolean;
 }
 
-const AddDeckDialog = ({ userId, onClose, onSuccess }: AddDeckDialogProps) => {
-  const { createDeck, loading } = useCreateDeck();
+const AddDeckDialog = ({
+  onClose,
+  onSuccess,
+  createDeck,
+  loading,
+}: AddDeckDialogProps) => {
   const [deckName, setDeckName] = useState("");
 
-  const handleCreateDeck = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!deckName.trim()) {
@@ -33,26 +35,14 @@ const AddDeckDialog = ({ userId, onClose, onSuccess }: AddDeckDialogProps) => {
       return;
     }
 
-    const selectedColor = generateRandomColor();
-
-    const result = await createDeck({
-      id: "",
-      deck_name: deckName.trim(),
-      user_id: userId,
-      color: selectedColor,
-      card_count: 0,
-    });
-
-    if (result.error) {
-      toast.error("Failed to create deck. Please try again.");
-      return;
-    }
-
-    if (result.success) {
-      toast.success("Deck added successfully.");
-      setDeckName("");
+    try {
+      await createDeck(deckName);
+      clearText();
       onSuccess();
       onClose();
+      toast.success("Deck added successfully.");
+    } catch {
+      toast.error("Failed to create deck. Please try again.");
     }
   };
 
@@ -78,8 +68,7 @@ const AddDeckDialog = ({ userId, onClose, onSuccess }: AddDeckDialogProps) => {
           Create a new deck here. Click add deck when you are done.
         </DialogDescription>
       </DialogHeader>
-
-      <form onSubmit={handleCreateDeck}>
+      <form onSubmit={handleSubmit}>
         <div className="relative">
           <Input
             className="px-2.5 py-1.5 pr-11 rounded-lg border bg-white dark:text-black focus:outline-none focus:ring-1 focus:ring-green focus:ring-offset-2 hover:outline-none hover:ring-green hover:ring-1 hover:ring-offset-2 transition-all"
