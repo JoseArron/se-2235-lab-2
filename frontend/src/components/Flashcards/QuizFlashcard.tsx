@@ -1,7 +1,7 @@
 import { Separator } from "@radix-ui/react-separator";
 import { Label } from "../ui/label";
 
-interface QuizFlashcardProps {
+export interface QuizFlashcardProps {
   front: string;
   back: string;
   isBackVisible: boolean;
@@ -15,7 +15,7 @@ const QuizFlashcard: React.FC<QuizFlashcardProps> = ({
   return (
     <div className="flex flex-col w-full h-full md:min-h-44 lg:min-h-44 xl:min-h-44 md:h-full lg:h-full xl:h-full bg-white border-2 border-green rounded-xl p-4 sm:p-6 shadow-sm dark:bg-dark-foreground">
       {/* Front Content */}
-      <div className="front flex w-full">
+      <div className="front flex w-full min-h-[50px]">
         <Label
           className="text-wrap overflow-hidden"
           style={{
@@ -33,7 +33,7 @@ const QuizFlashcard: React.FC<QuizFlashcardProps> = ({
       <Separator className="border-t-2 border-gray-300 dark:border-800 w-full my-4" />
 
       {/* Back Content */}
-      <div className="back flex w-full flex-1">
+      <div className="back flex w-full flex-1 min-h-[50px]">
         <Label
           className="text-wrap overflow-hidden"
           style={{
