@@ -6,6 +6,7 @@
 - [Setup Prettier](#setup-prettier-for-code-formatting)
 - [Setup local Postgres database](#set-up-local-postgres-database)
 - [How to run the app](#how-to-run-the-app)
+- [Running Storybook](#running-storybook)
 - [Updating table schemas](#updating-table-schemas)
 - [Linting](#linting)
 - [Testing](#testing)
@@ -127,6 +128,20 @@ In `frontend` & `backend` folders
 > cd backend
 > npm run dev
 > ```
+
+## Running Storybook
+
+Navigate to the `frontend` directory:
+
+```bash
+cd frontend
+```
+
+Run storybook
+
+```bash
+npm run storybook
+```
 
 ## Updating table schemas
 
