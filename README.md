@@ -24,6 +24,12 @@ To get started, follow the steps below:
 git clone https://github.com/JoseArron/se-2235-lab-2
 ```
 
+### Navigate to the project directory:
+
+```bash
+cd se-2235-lab-2
+```
+
 ### Install all dependencies
 
 In the **root** folder, run
