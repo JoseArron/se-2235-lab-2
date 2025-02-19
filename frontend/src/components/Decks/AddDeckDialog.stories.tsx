@@ -8,7 +8,6 @@ const meta: Meta<typeof AddDeckDialog> = {
   title: "Components/Decks/AddDeckDialog",
   component: AddDeckDialog,
   argTypes: {
-    onClose: { action: "closed" },
     onSuccess: { action: "success" },
   },
 };
