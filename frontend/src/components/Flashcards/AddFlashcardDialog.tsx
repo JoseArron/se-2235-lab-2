@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "../ui/label";
 
-interface AddFlashcardDialogProps {
+export interface AddFlashcardDialogProps {
   deckId: string;
   onClose: () => void;
   onSuccess: () => void;

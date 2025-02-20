@@ -8,7 +8,7 @@ import { Dialog, DialogContent, DialogClose } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { X, Play } from "lucide-react";
 
-interface VideoCardProps {
+export interface VideoCardProps {
   videoId: string;
   thumbnailUrl: string;
   title: string;
